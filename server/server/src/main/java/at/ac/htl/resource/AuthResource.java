@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.Instant;
 import java.util.Set;
+
 //@RolesAllowed("user")
 @Path("/api/auth")
 public class AuthResource {
@@ -38,20 +39,9 @@ public class AuthResource {
         if (user == null) {
             return Response.status(404).build();
         }
-
         PasswordSaltModel hashedData = this.userRepo.getPaswordByUsername(credentials.getUsername());
-
-        String hashedPassword = BCrypt.hashpw(hashedData.password, hashedData.salt);
-        System.out.println(hashedPassword + " HasshedpwakjÖKJNDSIJDSÖF");
-        System.out.println(hashedData.password + " pw form db");
-        System.out.println(credentials.getPassword() + " Password");
-        if (BCrypt.checkpw(credentials.getPassword(), hashedPassword)) {
-            System.out.println("The password is correct." + hashedPassword);
-            System.out.println(hashedData.salt);
-        } else {
-            System.out.println(hashedData.salt);
-            System.out.println("The password is incorrect." + hashedPassword);
-
+        if (!BCrypt.checkpw(credentials.getPassword(), hashedData.password)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
         long exp = Instant.now().getEpochSecond() + lifespan;
