@@ -9,7 +9,6 @@ import org.mindrot.jbcrypt.BCrypt;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -30,25 +29,23 @@ public class UserResource {
 
     @GET
     @Path("/{username}")
-    public User getUserByName(@PathParam("username") String username){
+    public User getUserByName(@PathParam("username") String username) {
         return this.userRepo.findByUsername(username);
     }
 
     @POST
     @Transactional
-    public Response addUser(UserModel data){
+    public Response addUser(UserModel data) {
 
         User user = this.userRepo.findByUsernameOrEmail(data.username, data.mail);
-        if(user==null){
+        if (user == null) {
             String salt = BCrypt.gensalt();
-            String password  = BCrypt.hashpw(data.password, salt);
-            user = new User(data.username, data.firstname, data.lastname, password, data.mail, salt );
+            String password = BCrypt.hashpw(data.password, salt);
+            user = new User(data.username, data.firstname, data.lastname, password, data.mail, salt);
             this.userRepo.persist(user);
         }
-
-        return null;
+        return Response.ok().build();
     }
-
 
 
 
