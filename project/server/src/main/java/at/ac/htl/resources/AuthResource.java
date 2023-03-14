@@ -1,16 +1,18 @@
 package at.ac.htl.resources;
 
+
 import at.ac.htl.entity.UserEntity;
 import at.ac.htl.model.CredentialsDTO;
 import at.ac.htl.model.PasswordSaltModel;
 import at.ac.htl.repo.UserRepo;
-import com.oracle.svm.core.annotate.Inject;
 import io.smallrye.jwt.build.Jwt;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.jwt.Claims;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.inject.Inject;
 import javax.json.Json;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,20 +22,18 @@ import javax.ws.rs.core.Response;
 import java.time.Instant;
 import java.util.Set;
 
-@Path("/api/auth")
+@Path("/auth")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class AuthResource {
-
-
-
-    @Inject
-    UserRepo userRepo;
     @Inject
     @ConfigProperty(name = "smallrye.jwt.new-token.lifespan")
     long lifespan;
+    @Inject
+    UserRepo userRepo;
+
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response login(CredentialsDTO credentials) {
 
         UserEntity user = this.userRepo.findByUsername(credentials.getUsername());

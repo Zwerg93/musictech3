@@ -21,4 +21,11 @@ public class Playlist extends PanacheEntityBase {
     @OneToMany
     public List<SongEntity> songList = new LinkedList<>();
 
+    public Playlist(String name, UserEntity user) {
+        this.name = name;
+        this.user = user;
+    }
+
+    public Playlist() {
+    }
 }

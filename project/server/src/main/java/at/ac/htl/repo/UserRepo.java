@@ -25,7 +25,6 @@ public class UserRepo implements PanacheRepository<UserEntity> {
         return query.getResultStream().findFirst().orElse(null);
     }
 
-
     public PasswordSaltModel getPaswordByUsername(String username) {
         TypedQuery<PasswordSaltModel> query = getEntityManager().createQuery("" +
                 "select new at.ac.htl.model.PasswordSaltModel(u.password, u.salt) from UserEntity u where lower(u.username) like :username", PasswordSaltModel.class);

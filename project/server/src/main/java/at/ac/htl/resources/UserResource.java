@@ -1,7 +1,9 @@
 package at.ac.htl.resources;
 
+import at.ac.htl.entity.Playlist;
 import at.ac.htl.entity.UserEntity;
 import at.ac.htl.model.UserModel;
+import at.ac.htl.repo.PlaylistRepo;
 import at.ac.htl.repo.UserRepo;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -20,6 +22,9 @@ public class UserResource {
 
     @Inject
     UserRepo userRepo;
+
+    @Inject
+    PlaylistRepo playlistRepo;
 
     @GET
     @Path("/all")
@@ -43,7 +48,26 @@ public class UserResource {
             String password = BCrypt.hashpw(data.password, salt);
             user = new UserEntity(data.username, data.firstname, data.lastname, password, data.mail, salt);
             this.userRepo.persist(user);
+        } else {
+            return Response.status(400).build();
         }
+        return Response.ok().build();
+    }
+
+    @PUT
+    @Path("/addPlaylist/{username}/{playlistID}")
+    public Response addPlaylistToUser(@PathParam("username") String username, @PathParam("playlistID") long playlistid) {
+        UserEntity user = this.userRepo.findByUsername(username);
+        if (user == null) {
+            return Response.status(404).build();
+        }
+        Playlist playlist = this.playlistRepo.findById(playlistid);
+        if (playlist == null) {
+            return Response.status(404).build();
+
+        }
+
+        user.playlists.add(playlist);
         return Response.ok().build();
     }
 }
