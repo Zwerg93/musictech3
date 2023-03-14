@@ -29,7 +29,7 @@ import java.util.ArrayList;
 @Path("/youtube")
 @Consumes("application/json")
 public class YoutubeResource {
-    private String postURL = "";
+    private String postURL = "http://localhost:8080/stream/download/";
     private static final String DEVELOPER_KEY = "AIzaSyDDd_3IHYSGqMpzuybFRnirJrVeRIl4i5Y";
     private static final String APPLICATION_NAME = "Musictech";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -118,9 +118,7 @@ public class YoutubeResource {
         }
         try {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            //postURL = "/api/uploadFile/download/" + title + ".mp3";
-            //postURL = "http://localhost:8080/uploadFile/download/" + title + ".mp3";
-            postURL = "http://localhost:8080/stream/download/" + title + ".mp3";
+            postURL += title + ".mp3";
 
 
             SongEntity song = new SongEntity(title, postURL, "");

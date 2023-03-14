@@ -70,4 +70,6 @@ public class UserResource {
         user.playlists.add(playlist);
         return Response.ok().build();
     }
+
+
 }
