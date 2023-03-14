@@ -6,10 +6,10 @@ import at.ac.htl.model.PlaylistDTO;
 import at.ac.htl.repo.PlaylistRepo;
 import at.ac.htl.repo.SongRepo;
 import at.ac.htl.repo.UserRepo;
-import com.oracle.svm.core.annotate.Inject;
 
+
+import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.websocket.server.PathParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;

@@ -1,5 +1,6 @@
 package at.ac.htl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ public class UserEntity extends PanacheEntity {
     public String salt;
 
     @OneToMany(mappedBy = "user")
+
     public List<Playlist> playlists = new LinkedList<>();
 
 
