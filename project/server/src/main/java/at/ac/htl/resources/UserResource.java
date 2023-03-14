@@ -3,9 +3,9 @@ package at.ac.htl.resources;
 import at.ac.htl.entity.UserEntity;
 import at.ac.htl.model.UserModel;
 import at.ac.htl.repo.UserRepo;
-import com.oracle.svm.core.annotate.Inject;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,6 +16,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
+
 
     @Inject
     UserRepo userRepo;
