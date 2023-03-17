@@ -7,6 +7,7 @@ import at.ac.htl.repo.PlaylistRepo;
 import at.ac.htl.repo.UserRepo;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -26,6 +27,7 @@ public class UserResource {
     @Inject
     PlaylistRepo playlistRepo;
 
+    @RolesAllowed("ROLE_ADMIN")
     @GET
     @Path("/all")
     public List<UserEntity> getAllUser() {

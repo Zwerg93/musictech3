@@ -46,7 +46,7 @@ public class AuthResource {
         }
 
         long exp = Instant.now().getEpochSecond() + lifespan;
-        String token = Jwt.claim(Claims.upn.name(), credentials.getPassword()).groups(Set.of("user", "admin")).sign();
+        String token = Jwt.claim(Claims.upn.name(), credentials.getPassword()).groups(Set.of("ROLE_ADMIN", "ROLE_MODERATOR")).sign();
         String entity = Json.createObjectBuilder().add("token", token).add("expires_at", exp).build().toString();
 
         return Response.ok().entity(entity).build();
