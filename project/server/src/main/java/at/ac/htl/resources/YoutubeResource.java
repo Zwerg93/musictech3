@@ -27,9 +27,10 @@ import java.util.ArrayList;
 
 @Produces("application/json")
 @Path("/youtube")
+
 @Consumes("application/json")
 public class YoutubeResource {
-    private String postURL = "http://localhost:8080/stream/download/";
+    private String postURL = "http://localhost:8080/api/stream/download/";
     private static final String DEVELOPER_KEY = "AIzaSyDDd_3IHYSGqMpzuybFRnirJrVeRIl4i5Y";
     private static final String APPLICATION_NAME = "Musictech";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -73,6 +74,7 @@ public class YoutubeResource {
     @Transactional
     @Path("/download/mp3/{id}/{title}")
     public Response downloadSongByYTID(@PathParam("id") String id, @PathParam("title") String title) {
+        this.postURL = "http://localhost:8080/api/stream/download/";
         StringBuilder sbf1 = new StringBuilder();
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet("https://api.vevioz.com/api/button/mp3/" + id);
@@ -118,12 +120,12 @@ public class YoutubeResource {
         }
         try {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            postURL += title + ".mp3";
+            postURL  = postURL + title + ".mp3";
 
 
             SongEntity song = new SongEntity(title, postURL, "");
             repo.persist(song);
-            System.out.println("Donwload succes " + title);
+            System.out.println("Donwload succes " + postURL + " titel "+ title);
         } catch (IOException e) {
             e.printStackTrace();
         }

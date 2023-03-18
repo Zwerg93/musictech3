@@ -1,1 +1,21 @@
-<p>home works!</p>
+<div class="section">
+  <div class="container text-end">
+    <div class="row p-1">
+
+      <div *ngFor="let tmp of playlists">
+        <div>
+          <div class="row p-1">
+
+            <div class="col px-1">
+              <div (click)="getPlaylist(1);" class=" tiles2 w-100 py-3 bg-light d-flex justify-content-around  "
+                   routerLink="/player">
+                <i class="fa-solid fa-heart "></i>
+                <span>{{tmp.name}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

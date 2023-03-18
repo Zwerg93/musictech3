@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {HttpService} from "../../_services/http.service";
 import {StorageService} from "../../_services/storage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpService, private storageService: StorageService) {
+  constructor(private _router: Router, private fb: FormBuilder, private http: HttpService, private storageService: StorageService) {
   }
 
   onSubmit(): void {
@@ -46,6 +47,7 @@ export class LoginComponent implements OnInit {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       this.roles = this.storageService.getUser().roles;
+      this._router.navigate(['home'])
     }
   }
   reloadPage(): void {

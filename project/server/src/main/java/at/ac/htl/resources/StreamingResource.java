@@ -23,6 +23,7 @@ import java.util.Map;
 
 
 @Path("/stream")
+
 public class StreamingResource {
 
     @Inject

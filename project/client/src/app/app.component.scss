@@ -1,0 +1,38 @@
+body{
+  background: rgb(3,2,1);
+  background: linear-gradient(180deg, rgba(3,2,1,1) 0%, rgba(20,2,64,1) 67%, rgba(0,101,107,1) 100%);
+}
+#headerhomepage{
+  padding-right: 32vw;
+}
+.changeheightofplalist{
+
+}
+.tiles2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2vw;
+}
+
+.playerShortcut{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1vh;
+  border-radius: 2vw;
+  position: fixed;
+  top: 80%;
+
+}
+.fix-size{
+  width: 8vw;
+}
+.spacer{
+  margin-top: 120vw;
+}
+
+.footer{
+
+  border-radius: 3vw;
+  margin-bottom: 1vw;
+}

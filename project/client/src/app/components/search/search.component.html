@@ -1,0 +1,21 @@
+<div class="container position-sticky my-4  ">
+  <div class="d-flex">
+    <input [(ngModel)]="searchString" id="input" class="form-control bg-dark text-light me-2"
+           placeholder="Search" aria-label="Search" type="search"/>
+    <button [disabled]="!searchString" (click)="search();" class="btn bg-primary">Search</button>
+  </div>
+</div>
+<div class="outerClass">
+  <div *ngFor="let i of result" class="container text-light py-2 my-2 bg-dark w-75 my-2 overflow-scroll results ">
+    <div (click)="download(i.id.videoId, i.snippet.title)">
+      <div>
+        <img class="w-25" src="{{i.snippet.thumbnails.default.url}}" alt="{{i.snippet.title}}">
+      </div>
+      <div>
+        {{i.snippet.title}}
+      </div>
+    </div>
+  </div>
+</div>
+
+

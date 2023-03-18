@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/user")
+
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
@@ -27,7 +28,6 @@ public class UserResource {
     @Inject
     PlaylistRepo playlistRepo;
 
-    @RolesAllowed("ROLE_ADMIN")
     @GET
     @Path("/all")
     public List<UserEntity> getAllUser() {
@@ -70,6 +70,15 @@ public class UserResource {
         }
 
         user.playlists.add(playlist);
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Transactional
+    @Path("/delte/{username}")
+    public Response deleteByUsername(@PathParam("username") String username){
+      UserEntity u = this.userRepo.findByUsername(username);
+      this.userRepo.delete(u);
         return Response.ok().build();
     }
 

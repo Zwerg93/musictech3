@@ -17,7 +17,12 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
-import {MatCardModule} from '@angular/material/card'
+import {MatCardModule} from '@angular/material/card';
+import { SearchComponent } from './components/search/search.component';
+import { PlayerComponent } from './components/player/player.component'
+import {MatListModule} from "@angular/material/list";
+import {MatIconModule} from "@angular/material/icon";
+import {MatSliderModule} from "@angular/material/slider";
 
 @NgModule({
   declarations: [
@@ -28,7 +33,10 @@ import {MatCardModule} from '@angular/material/card'
     ProfileComponent,
     BoardAdminComponent,
     BoardModeratorComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    SearchComponent,
+    PlayerComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -41,7 +49,10 @@ import {MatCardModule} from '@angular/material/card'
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule,
+    MatListModule,
+    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

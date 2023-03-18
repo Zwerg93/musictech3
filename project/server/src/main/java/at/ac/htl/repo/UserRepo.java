@@ -31,4 +31,11 @@ public class UserRepo implements PanacheRepository<UserEntity> {
         query.setParameter("username", username.toLowerCase());
         return query.getSingleResult();
     }
+
+    public void deletebyUsername(String username) {
+        TypedQuery<UserEntity> query = getEntityManager().createQuery("" +
+                "delete from UserEntity u where lower(u.username) = :username ", UserEntity.class);
+        query.setParameter("username", username.toLowerCase());
+        return;
+    }
 }
