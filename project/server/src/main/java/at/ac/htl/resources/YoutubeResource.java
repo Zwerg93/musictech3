@@ -12,6 +12,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -30,7 +31,11 @@ import java.util.ArrayList;
 
 @Consumes("application/json")
 public class YoutubeResource {
-    private String postURL = "http://localhost:8080/api/stream/download/";
+
+    @Inject
+    @ConfigProperty(name = "API_URL")
+    String postURL;
+    //private String postURL = "http://localhost:8080/api/stream/download/";
     private static final String DEVELOPER_KEY = "AIzaSyDDd_3IHYSGqMpzuybFRnirJrVeRIl4i5Y";
     private static final String APPLICATION_NAME = "Musictech";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();

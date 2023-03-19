@@ -3,6 +3,8 @@ import {HttpService} from "./_services/http.service";
 import {StorageService} from "./_services/storage.service";
 import {Router} from "@angular/router";
 import {PlayerService} from "./_services/player.service";
+import {SongService} from "./_services/song.service";
+
 const USER_KEY = 'auth-user';
 
 @Component({
@@ -19,7 +21,7 @@ export class AppComponent implements OnInit {
   username?: string;
   title = 'client';
 
-  constructor(private storageService: StorageService, private http: HttpService, private _router: Router, public palyerSerice: PlayerService) {
+  constructor(public songservice: SongService, private storageService: StorageService, private http: HttpService, private _router: Router, public playerService: PlayerService) {
     if (JSON.parse(window.sessionStorage.getItem(USER_KEY)!) != null) {
       this.http.getAllUser(JSON.parse(window.sessionStorage.getItem(USER_KEY)!)).subscribe((c => {
         console.log(c[0].firstname + " allUser")
@@ -30,7 +32,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
-    //console.log(JSON.parse(window.sessionStorage.getItem(USER_KEY)!))
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
       console.log(user)
@@ -42,8 +43,10 @@ export class AppComponent implements OnInit {
     }else{
       this._router.navigate(['login'])
     }
+  }
 
-
+  isPlaying():boolean{
+    return this.playerService.isplaying
   }
 
 

@@ -1,23 +1,29 @@
-<div class="overflow-test">
-  <div id="songContainer" class="content text-black">
-    <mat-list color="primary">
-      <h3 mat-subheader>Songs</h3>
-      <mat-list-item class="mat-list-item-content" *ngFor="let file of cloudService.songlist; let i = index">
-        <mat-list-item data-bs-toggle="modal"
-                       data-bs-target="#staticBackdrop" >
-          <!--data-bs-toggle="modal" data-bs-target="#staticBackdrop"-->
-          <mat-icon (click)="currentSongClickedon(i); playerService.openFile(file, i);" color="primary" mat-list-icon>
-            music_note
-          </mat-icon>
-          <h4 (click)="currentSongClickedon(i); playerService.openFile(file, i);" mat-line
-              class="text-light overflow-auto ">{{ file.title }}</h4>
-          <div class="spacer2"><i  class="fa-solid fa-ellipsis-vertical"></i></div>
-          <h5 (click)="currentSongClickedon(i); playerService.openFile(file, i);" mat-line class="text-light">
-            by {{ file.artist }}</h5>
-          <h6 *ngIf="playerService.currentFile.index === i && playerService.state?.error">ERROR</h6>
-          <mat-divider></mat-divider>
+<div *ngIf="!this.songservice.showDetail">
+  <div class="overflow-test">
+    <div id="songContainer" class="content text-black">
+      <mat-list color="primary">
+        <h3 mat-subheader>Songs</h3>
+        <mat-list-item (click)="toggleDetailView()" class="mat-list-item-content"
+                       *ngFor="let file of cloudService.songlist; let i = index">
+          <mat-list-item data-bs-toggle="modal"
+                         data-bs-target="#staticBackdrop">
+            <mat-icon (click)="currentSongClickedon(i); playerService.openFile(file, i);" color="primary" mat-list-icon>
+              music_note
+            </mat-icon>
+            <h4 (click)="currentSongClickedon(i); playerService.openFile(file, i);" mat-line
+                class="text-light overflow-auto ">{{ file.title }}</h4>
+            <div class="spacer2"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+            <h5 (click)="currentSongClickedon(i); playerService.openFile(file, i);" mat-line class="text-light">
+              by {{ file.artist }}</h5>
+            <h6 *ngIf="playerService.currentFile.index === i && playerService.state?.error">ERROR</h6>
+            <mat-divider></mat-divider>
+          </mat-list-item>
         </mat-list-item>
-      </mat-list-item>
-    </mat-list>
+      </mat-list>
+    </div>
   </div>
+</div>
+
+<div *ngIf="this.songservice.showDetail">
+  <app-over-fiew-song></app-over-fiew-song>
 </div>

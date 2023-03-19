@@ -1,0 +1,44 @@
+<p (click)="close()" class="text-light position-relative text-right">Close</p>
+<div>
+  <div class="text-light d-flex w-100 justify-content-between text-primary">
+    <div class=" h6 text-primary mt-1"> {{ playerService.state?.readableCurrentTime }}</div>
+    <div class="h6 text-primary mt-1  ">{{ playerService.state?.readableDuration }}</div>
+  </div>
+
+  <div class="w-100 d-flex justify-content-center">
+    <mat-slider class="w-50 col time-slider text-light" min="0" [max]="playerService.state?.duration" step="1"
+                [value]="playerService.state?.currentTime"
+                (input)="playerService.onSliderChangeEnd($event)"></mat-slider>
+  </div>
+</div>
+
+
+<div class="d-flex justify-content-center fixed-bottom my-5">
+  <button class="bg-dark border-0 h4 mx-1 fix-size">
+    <i class="text-primary h4 fa-solid fa-heart  "></i>
+  </button>
+
+  <button class="bg-dark border-0 h4 mx-3 fix-size" [disabled]="playerService.isFirstPlaying()"
+          (click)="playerService.previous()">
+    <mat-icon class="text-primary" mat-list-icon>skip_previous</mat-icon>
+  </button>
+  <button class="bg-dark border-0 h4 mx-3 fix-size" (click)="playerService.play()"
+          [disabled]="playerService.state?.error"
+          *ngIf="!isPlaying()">
+    <mat-icon class="text-primary" mat-list-icon>play_circle_filled</mat-icon>
+  </button>
+  <button class="bg-dark border-0 h4 mx-3 fix-size" (click)="playerService.pause()"
+          *ngIf="isPlaying()">
+    <mat-icon class="text-primary" mat-list-icon>pause</mat-icon>
+  </button>
+  <button class="bg-dark border-0 h4 mx-3 fix-size" [disabled]="playerService.isLastPlaying()"
+          (click)="playerService.next()">
+    <mat-icon class="text-primary" mat-list-icon>skip_next</mat-icon>
+  </button>
+  <button id="shuffleButton" class="bg-dark border-0 h4 mx-3 fix-size"
+          (click)="playerService.shuffle(cloudService.songlist)">
+    <i class="text-primary fa-solid fa-shuffle"></i>
+  </button>
+
+
+</div>

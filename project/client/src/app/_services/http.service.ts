@@ -23,7 +23,7 @@ const httpOptionsPost = {
 
 
 export class HttpService {
-  //console.log)
+
 
   constructor(private http: HttpClient) {
   }

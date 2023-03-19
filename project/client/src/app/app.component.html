@@ -33,16 +33,16 @@
         <div class="playerShortcut w-100 py-2 bg-dark">
           <div class="start-0 px-2 py-2">
             <a class="h6 text-light " data-bs-toggle="modal"
-               data-bs-target="#staticBackdrop"></a>
+               data-bs-target="#staticBackdrop">{{playerService.currentSongName}}</a>
           </div>
           <div class="px-3 py-2">
             <i class="px-3 h4 fa-solid text-light h4 fa-heart  "></i>
-
-            <button (click)="palyerSerice.play()" class="bg-dark border-0 h4 mx-1 fix-size">
+            <button *ngIf="!isPlaying()" (click)=" songservice.changeButton()"
+                    class="bg-dark border-0 h4 mx-1 fix-size">
               <i class="fa-solid fa-play text-light"></i>
             </button>
-
-            <button (click)="palyerSerice.pause()" class="bg-dark border-0 h4 mx-1 fix-size">
+            <button *ngIf="isPlaying()" (click)=" songservice.changeButton()"
+                    class="bg-dark border-0 h4 mx-1 fix-size">
               <i class="fa-solid fa-pause text-light "></i>
             </button>
           </div>

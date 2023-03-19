@@ -23,6 +23,8 @@ import { PlayerComponent } from './components/player/player.component'
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSliderModule} from "@angular/material/slider";
+import { OverFiewSongComponent } from './components/over-fiew-song/over-fiew-song.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import {MatSliderModule} from "@angular/material/slider";
     BoardUserComponent,
     SearchComponent,
     PlayerComponent,
+    OverFiewSongComponent,
 
   ],
   imports: [
@@ -53,6 +56,7 @@ import {MatSliderModule} from "@angular/material/slider";
     MatIconModule,
     MatListModule,
     MatSliderModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -33,6 +33,7 @@ export class PlayerService {
     this.audioService.playStream(url)
       .subscribe(events => {
       });
+    this.isplaying = true;
   }
 
   openFile(file: SongModel, index: any) {

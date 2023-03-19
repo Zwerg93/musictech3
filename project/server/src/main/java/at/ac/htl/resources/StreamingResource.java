@@ -2,6 +2,7 @@ package at.ac.htl.resources;
 
 import at.ac.htl.entity.SongEntity;
 import at.ac.htl.repo.SongRepo;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -30,8 +31,9 @@ public class StreamingResource {
     SongRepo songRepo;
 
     private final String UPLOADED_FILE_PATH = "src/main/resources/files/";
-
-    private String postURL = "http://localhost:8080/steam/download/";
+    @Inject
+    @ConfigProperty(name = "API_URL")
+    String postURL;
 
     @POST
     @Path("/upload")
