@@ -37,7 +37,7 @@ public class SongResource {
     @Transactional
     @Path("/add")
     public Response addSong(SongModel data) {
-        SongEntity song = new SongEntity(data.title, data.url, data.artist);
+        SongEntity song = new SongEntity(data.title, data.url, data.artist, data.thumbnailUrl);
         this.songRepo.persist(song);
         return Response.ok().build();
     }

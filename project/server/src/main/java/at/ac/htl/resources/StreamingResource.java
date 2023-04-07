@@ -42,6 +42,7 @@ public class StreamingResource {
     public Response uploadFile(MultipartFormDataInput input) {
         String fileName = "";
         String artist;
+        String thumbnailUrl = "";
 
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
         List<InputPart> inputParts = uploadForm.get("uploadedFile");
@@ -52,11 +53,12 @@ public class StreamingResource {
                 MultivaluedMap<String, String> header = inputPart.getHeaders();
                 fileName = getFileName(header);
                 artist = getArtist(header);
+
                 InputStream inputStream = inputPart.getBody(InputStream.class, null);
                 System.out.println(fileName);
                 postURL += fileName;
                 System.out.println(postURL);
-                SongEntity song = new SongEntity(fileName, postURL, artist);
+                SongEntity song = new SongEntity(fileName, postURL, artist, thumbnailUrl);
                 songRepo.persist(song);
                 byte[] bytes = IOUtils.toByteArray(inputStream);
                 fileName = UPLOADED_FILE_PATH + fileName;

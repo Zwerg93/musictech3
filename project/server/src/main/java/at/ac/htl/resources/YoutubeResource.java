@@ -1,6 +1,7 @@
 package at.ac.htl.resources;
 
 import at.ac.htl.entity.SongEntity;
+import at.ac.htl.model.YoutubeDownloadDTO;
 import at.ac.htl.repo.SongRepo;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -77,12 +78,12 @@ public class YoutubeResource {
 
     @GET
     @Transactional
-    @Path("/download/mp3/{id}/{title}")
-    public Response downloadSongByYTID(@PathParam("id") String id, @PathParam("title") String title) {
+    @Path("/download/mp3/")
+    public Response downloadSongByYTID(YoutubeDownloadDTO data) {
         this.postURL = "http://localhost:8080/api/stream/download/";
         StringBuilder sbf1 = new StringBuilder();
         HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("https://api.vevioz.com/api/button/mp3/" + id);
+        HttpGet httpGet = new HttpGet("https://api.vevioz.com/api/button/mp3/" + data.id);
         HttpResponse response = null;
         try {
             response = httpClient.execute(httpGet);
@@ -106,7 +107,7 @@ public class YoutubeResource {
         }
         URL website;
         try {
-            website = new URL(sbf1.substring(sbf1.indexOf(id) - 35, sbf1.indexOf(id) + 97));
+            website = new URL(sbf1.substring(sbf1.indexOf(data.id) - 35, sbf1.indexOf(data.id) + 97));
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -119,18 +120,16 @@ public class YoutubeResource {
         FileOutputStream fos = null;
         try {
 
-            fos = new FileOutputStream("src/main/resources/files/" + title + ".mp3");
+            fos = new FileOutputStream("src/main/resources/files/" + data.title + ".mp3");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         try {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            postURL  = postURL + title + ".mp3";
-
-
-            SongEntity song = new SongEntity(title, postURL, "");
+            postURL  = postURL + data.title + ".mp3";
+            SongEntity song = new SongEntity(data.title, postURL, "", data.thumbnailUrl);
             repo.persist(song);
-            System.out.println("Donwload succes " + postURL + " titel "+ title);
+            System.out.println("Donwload succes " + postURL + " titel "+ data.title);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,8 +1,7 @@
 package at.ac.htl.model;
 
-public class SongModel {
+public class YoutubeDownloadDTO {
+    public String id;
     public String title;
-    public String url;
-    public String artist;
     public String thumbnailUrl;
 }
