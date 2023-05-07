@@ -6,6 +6,7 @@ import {UserModel} from "../model/user.model";
 import {TokenModel} from "../model/token.model";
 import {PlaylistModel} from "../model/playlist.model";
 import {SongModel} from "../model/song.model";
+import {PostSongModel} from "../model/postSong.model";
 
 const USER_KEY = 'auth-user';
 const API_URL = environment.API_URL;
@@ -66,8 +67,8 @@ export class HttpService {
   searchOnYoutube(searchstring: String):Observable<any>{
     return this.http.get(API_URL + "/youtube/search/" + searchstring)
   }
-  download(videoId: string, title: string):Observable<any>{
-    return this.http.get(API_URL + "/youtube/download/mp3/" + videoId + "/" + title);
+  download(song: PostSongModel):Observable<any>{
+    return this.http.post(API_URL + "/youtube/download/mp3/", song);
   }
 
 }

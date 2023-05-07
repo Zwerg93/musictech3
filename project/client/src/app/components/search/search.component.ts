@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../../_services/http.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {PostSongModel} from "../../model/postSong.model";
 
 @Component({
   selector: 'app-search',
@@ -25,9 +26,15 @@ export class SearchComponent implements OnInit {
     }))
   }
 
-  download(videoId: string, title: string) {
-    console.log(title + " titel")
-    this.http.download(videoId, title).subscribe((c => {
+  download(videoId: string, title: string, thumbnailurl: string, channelTitle: string) {
+    console.log(channelTitle + " titel")
+    const song: PostSongModel = {
+      title : title,
+      id: videoId,
+      thumbnailUrl: thumbnailurl,
+      artist: channelTitle
+    }
+    this.http.download(song).subscribe((c => {
           this.snackBar.open("Succes", undefined, {
               duration: 1000
             }

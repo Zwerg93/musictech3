@@ -76,7 +76,7 @@ public class YoutubeResource {
         return responselist;
     }
 
-    @GET
+    @POST
     @Transactional
     @Path("/download/mp3/")
     public Response downloadSongByYTID(YoutubeDownloadDTO data) {
@@ -119,17 +119,20 @@ public class YoutubeResource {
         }
         FileOutputStream fos = null;
         try {
+            String path = new File("src/main/resources/files/").getAbsolutePath();
+            System.out.println(path);
 
-            fos = new FileOutputStream("src/main/resources/files/" + data.title + ".mp3");
+            //  fos = new FileOutputStream("src/main/resources/files/" + data.title + ".mp3");
+            fos = new FileOutputStream(path + data.title + ".mp3");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         try {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            postURL  = postURL + data.title + ".mp3";
-            SongEntity song = new SongEntity(data.title, postURL, "", data.thumbnailUrl);
+            postURL = postURL + data.title + ".mp3";
+            SongEntity song = new SongEntity(data.title, postURL, data.artist, data.thumbnailUrl);
             repo.persist(song);
-            System.out.println("Donwload succes " + postURL + " titel "+ data.title);
+            System.out.println("Donwload succes " + postURL + " titel " + data.title);
         } catch (IOException e) {
             e.printStackTrace();
         }
