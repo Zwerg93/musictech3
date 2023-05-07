@@ -122,8 +122,8 @@ public class YoutubeResource {
             String path = new File("src/main/resources/files/").getAbsolutePath();
             System.out.println(path);
 
-            //  fos = new FileOutputStream("src/main/resources/files/" + data.title + ".mp3");
-            fos = new FileOutputStream(path + data.title + ".mp3");
+             fos = new FileOutputStream("src/main/resources/files/" + data.title + ".mp3");
+            //fos = new FileOutputStream(path + data.title + ".mp3");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
