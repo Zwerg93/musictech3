@@ -10,8 +10,10 @@ export class PlayerService {
   currentFile: any = {};
   files: Array<any> = [];
   tmpFiles: Array<any> = [];
-  currentSongName?: String;
-  currentArtist?: String;
+  currentSongName: String = "";
+  currentArtist: String = "";
+  currentThumbnail : String = "";
+
   //audioService : AudioService;
   state: any;
   isplaying = false;
@@ -39,6 +41,7 @@ export class PlayerService {
   openFile(file: SongModel, index: any) {
     this.currentFile = {index, file};
     this.audioService.stop();
+    this.currentThumbnail = this.currentFile.file.thumbnailUrl;
     this.playStream(file.streamUrl);
   }
 
@@ -86,7 +89,10 @@ export class PlayerService {
     const index = this.currentFile.index + 1;
     const file = this.cloudService.songlist[index];
     this.openFile(file, index);
-    this.currentSongName = this.currentFile.file.name;
+
+    this.currentSongName = this.cloudService.songlist[index].title;
+    this.currentThumbnail = this.cloudService.songlist[index].thumbnailUrl;
+    this.currentArtist = this.cloudService.songlist[index].artist;
     this.audioService.audioObj.currentTime;
   }
 
@@ -95,7 +101,9 @@ export class PlayerService {
     const file = this.cloudService.songlist[index];
 
     this.openFile(file, index);
-    this.currentSongName = this.currentFile.file.name;
+    this.currentSongName = this.cloudService.songlist[index].title;
+    this.currentThumbnail = this.cloudService.songlist[index].thumbnailUrl;
+    this.currentArtist = this.cloudService.songlist[index].artist;
   }
 
   isFirstPlaying() {
@@ -136,7 +144,6 @@ export class PlayerService {
 
 
   currentSongClickedon(i: number) {
-    //console.log(this.files[i].name);
     this.currentSongName = this.cloudService.songlist[i].title;
     this.currentArtist = this.cloudService.songlist[i].artist;
   }

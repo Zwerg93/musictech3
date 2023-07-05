@@ -9,7 +9,7 @@
   <title>Home</title>
 </head>
 <body>
-<div class="section">
+<div *ngIf="!detailsareShowed()" class="section">
   <div class="d-flex justify-content-center h4">
     <nav class="navbar-expand navbar-light  w-100   d-flex justify-content-around  ">
       <div class=" navbar" id="navbarNavAltMarkup2">
@@ -31,21 +31,28 @@
     <div class="row p-1 ">
       <div class="col px-1">
         <div class="playerShortcut w-100 py-2 bg-dark">
-          <div class="start-0 px-2 py-2">
-            <a class="h6 text-light " data-bs-toggle="modal"
+
+
+          <div class="start-0 px-2 py-2 w-75">
+            <a class="h5 text-light " data-bs-toggle="modal"
                data-bs-target="#staticBackdrop">{{playerService.currentSongName}}</a>
           </div>
-          <div class="px-3 py-2">
-            <i class="px-3 h4 fa-solid text-light h4 fa-heart  "></i>
+
+          <div class=" py-2 w-25">
+
+            <mat-icon class="text-primary playerIcons">favorite_border</mat-icon>
+
             <button *ngIf="!isPlaying()" (click)=" songservice.changeButton()"
                     class="bg-dark border-0 h4 mx-1 fix-size">
-              <i class="fa-solid fa-play text-light"></i>
+              <mat-icon class="text-primary   playerIcons">play_circle_filled</mat-icon>
             </button>
             <button *ngIf="isPlaying()" (click)=" songservice.changeButton()"
                     class="bg-dark border-0 h4 mx-1 fix-size">
-              <i class="fa-solid fa-pause text-light "></i>
+              <mat-icon class="text-primary  playerIcons">pause</mat-icon>
             </button>
           </div>
+
+
         </div>
       </div>
     </div>
