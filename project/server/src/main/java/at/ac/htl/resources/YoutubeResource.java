@@ -9,6 +9,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
+import io.quarkus.narayana.jta.QuarkusTransaction;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.security.GeneralSecurityException;
@@ -33,8 +35,7 @@ import java.util.ArrayList;
 @Consumes("application/json")
 public class YoutubeResource {
 
-    @Inject
-    @ConfigProperty(name = "API_URL")
+
     String postURL;
     //private String postURL = "http://localhost:8080/api/stream/download/";
     private static final String DEVELOPER_KEY = "AIzaSyDDd_3IHYSGqMpzuybFRnirJrVeRIl4i5Y";
@@ -77,9 +78,9 @@ public class YoutubeResource {
     }
 
     @POST
-    @Transactional
+
     @Path("/download/mp3/")
-    public Response downloadSongByYTID(YoutubeDownloadDTO data) {
+    public Response downloadSongByYTID(YoutubeDownloadDTO data) throws IOException {
         this.postURL = "http://localhost:8080/api/stream/download/";
         StringBuilder sbf1 = new StringBuilder();
         HttpClient httpClient = new DefaultHttpClient();
@@ -105,36 +106,46 @@ public class YoutubeResource {
             }
             sbf1.append(line);
         }
-        URL website;
-        try {
-            website = new URL(sbf1.substring(sbf1.indexOf(data.id) - 35, sbf1.indexOf(data.id) + 97));
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-        ReadableByteChannel rbc = null;
-        try {
-            rbc = Channels.newChannel(website.openStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        FileOutputStream fos = null;
-        try {
-            String path = new File("src/main/resources/files/").getAbsolutePath();
-            System.out.println(path);
 
-             fos = new FileOutputStream("src/main/resources/files/" + data.title + ".mp3");
-            //fos = new FileOutputStream(path + data.title + ".mp3");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+
+
+        URL mp3Url = new URL(sbf1.substring(sbf1.indexOf(data.id) - 35, sbf1.indexOf(data.id) + 97));
+        URLConnection connection = mp3Url.openConnection();
+        int totalSize = connection.getContentLength();
+        int downloadedSize = 0;
+
+        try (InputStream in = connection.getInputStream();
+             OutputStream out = new FileOutputStream("src/main/resources/files/" + data.title + ".mp3")) {
+
+            byte[] buffer = new byte[4096*2];
+            int bytesRead;
+            while ((bytesRead = in.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+                downloadedSize += bytesRead;
+                // Fortschritt anzeigen
+                System.out.printf("Downloading: %d/%d bytes%n", downloadedSize, totalSize);
+            }
         }
+
+        System.out.println("Download abgeschlossen!");
+
+
+
+
+
+
         try {
-            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+           // fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            QuarkusTransaction.begin();
             postURL = postURL + data.title + ".mp3";
             SongEntity song = new SongEntity(data.title, postURL, data.artist, data.thumbnailUrl);
             repo.persist(song);
+            QuarkusTransaction.commit();
             System.out.println("Donwload succes " + postURL + " titel " + data.title);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            QuarkusTransaction.rollback();
         }
 
         return Response.ok().build();

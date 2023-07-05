@@ -49,6 +49,9 @@ export class AppComponent implements OnInit {
     return this.playerService.isplaying
   }
 
+  detailsareShowed():boolean{
+    return this.songservice.showDetail
+  }
 
   logOut() {
     this.storageService.clean();

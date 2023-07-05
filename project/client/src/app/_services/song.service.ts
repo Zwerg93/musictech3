@@ -22,10 +22,8 @@ export class SongService {
 
   changeButton() {
     if (this.playerservice.isplaying) {
-
       this.playerservice.pause()
     } else {
-
       this.playerservice.play()
     }
   }

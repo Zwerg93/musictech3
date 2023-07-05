@@ -11,6 +11,8 @@ export class AudioService {
   audioEvents = [
     'ended', 'error', 'play', 'playing', 'pause', 'timeupdate', 'canplay', 'loadedmetadata', 'loadstart', 'autoplay'
   ];
+
+
   private state: StreamState = {
     playing: false,
     readableCurrentTime: '',

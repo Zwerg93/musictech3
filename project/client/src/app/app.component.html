@@ -26,7 +26,7 @@
 </div>
 <router-outlet></router-outlet>
 
-<div class="section">
+<div *ngIf="!detailsareShowed()" class="section">
   <div class="container">
     <div class="row p-1 ">
       <div class="col px-1">
@@ -52,7 +52,7 @@
   </div>
 </div>
 
-<div class="d-flex justify-content-center h4">
+<div *ngIf="!detailsareShowed()" class="d-flex justify-content-center h4">
   <nav
     class="footer navbar-expand navbar-light tiles2  w-100 bg-light  d-flex justify-content-around fixed-bottom ">
     <div class=" navbar" id="navbarNavAltMarkup">
