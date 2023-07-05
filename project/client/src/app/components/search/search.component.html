@@ -1,21 +1,19 @@
-<div class="container position-sticky my-4  ">
-  <div class="d-flex">
+<div class="container position-sticky my-4">
+  <div class="d-flex justify-content-center align-items-center">
     <input [(ngModel)]="searchString" id="input" class="form-control bg-dark text-light me-2"
            placeholder="Search" aria-label="Search" type="search"/>
     <button [disabled]="!searchString" (click)="search();" class="btn bg-primary">Search</button>
   </div>
 </div>
 <div class="outerClass">
-  <div *ngFor="let i of result" class="container text-light py-2 my-2 bg-dark w-75 my-2 overflow-scroll results ">
-    <div (click)="download(i.id.videoId, i.snippet.title, i.snippet.thumbnails.high.url, i.snippet.channelTitle)">
-      <div>
+  <div class="container text-light py-2 my-2 bg-dark w-75 my-2 results">
+    <div *ngFor="let i of result" (click)="download(i.id.videoId, i.snippet.title, i.snippet.thumbnails.high.url, i.snippet.channelTitle)" class="mb-4" style="max-height: 75%; overflow-y: auto;">
+      <div class="d-flex justify-content-center align-items-center">
         <img class="w-25" src="{{i.snippet.thumbnails.default.url}}" alt="{{i.snippet.title}}">
       </div>
-      <div>
+      <div class="d-flex justify-content-center align-items-center">
         {{i.snippet.title}}
       </div>
     </div>
   </div>
 </div>
-
-

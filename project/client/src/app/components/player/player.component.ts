@@ -20,7 +20,7 @@ export class PlayerComponent implements OnInit {
 
   currentSongClickedon(i: number) {
     this.playerService.currentSongName = this.cloudService.songlist[i].title;
-    this.playerService.currentArtist = this.cloudService.songlist[i].title;
+    this.playerService.currentArtist = this.cloudService.songlist[i].artist;
   }
 
 

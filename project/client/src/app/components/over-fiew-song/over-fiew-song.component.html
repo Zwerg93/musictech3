@@ -1,44 +1,83 @@
-<p (click)="close()" class="text-light position-relative text-right">Close</p>
-<div>
-  <div class="text-light d-flex w-100 justify-content-between text-primary">
-    <div class=" h6 text-primary mt-1"> {{ playerService.state?.readableCurrentTime }}</div>
-    <div class="h6 text-primary mt-1  ">{{ playerService.state?.readableDuration }}</div>
+<div class="background-container">
+
+<div class="container-fluid">
+<span (click)="close()" class="py-3 h1 text-primary position-relative arrow-icon float-end float-md-none ms-2 ms-md-0">
+  <mat-icon class="arrow-down-icon">keyboard_arrow_down</mat-icon>
+</span>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+
+
+      </div>
+      <div class="py-4"></div>
+      <div class="d-flex justify-content-center">
+        <img src="{{playerService.currentThumbnail}}"
+             alt="Hier könnte Ihre Werbung stehen {{playerService.currentThumbnail}}"
+             class="img-fluid w-80"/>
+      </div>
+
+
+      <div class="py-5"></div>
+      <div class="py-3"></div>
+      <div class="d-flex justify-content-start fix-size">
+        <h2 class="text-white mt-3">{{playerService.currentSongName}}</h2>
+      </div>
+      <div class="d-flex justify-content-start fix-size">
+        <h3 class="text-white">{{playerService.currentArtist}}</h3>
+        <mat-icon class="">favorite_border</mat-icon>
+      </div>
+
+      <div class="py-3">
+
+        <div class="d-flex fixed-bottom sliderHeight justify-content-center ">
+          <mat-slider class="w-100 mt-3" min="0" [max]="playerService.state?.duration" step="1"
+                      [value]="playerService.state?.currentTime"
+                      (input)="playerService.onSliderChangeEnd($event)"></mat-slider>
+        </div>
+        <div class="d-flex mx-2 fixed-bottom timerHeight justify-content-between text-white">
+          <div class="h6 mt-1">{{ playerService.state?.readableCurrentTime }}</div>
+          <div class="h6 mt-1">{{ playerService.state?.readableDuration }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="w-100 d-flex justify-content-center">
-    <mat-slider class="w-50 col time-slider text-light" min="0" [max]="playerService.state?.duration" step="1"
-                [value]="playerService.state?.currentTime"
-                (input)="playerService.onSliderChangeEnd($event)"></mat-slider>
+  <div class="row">
+    <div class="col-12">
+      <div class="playerShortcut py-2 bg-dark d-flex justify-content-between fixed-bottom my-5 px-3">
+
+        <button class="bg-dark border-0  fix-size" [disabled]="playerService.isFirstPlaying()"
+                (click)="playerService.shuffle(cloudService.songlist)">
+          <mat-icon class="text-primary angularIconsouter">shuffle</mat-icon>
+        </button>
+
+        <button class="bg-dark border-0 fix-size " [disabled]="playerService.isFirstPlaying()"
+                (click)="playerService.previous()">
+          <mat-icon class="text-primary angularIconsmiddle">skip_previous</mat-icon>
+        </button>
+
+        <button *ngIf="!isPlaying()" class="bg-dark border-0   fix-size"  (click)=" songservice.changeButton()"
+                [disabled]="playerService.state?.error">
+          <mat-icon class="text-primary   angularIconsinner">play_circle_filled</mat-icon>
+        </button>
+
+        <button *ngIf="isPlaying()" class="bg-dark border-0   fix-size" (click)=" songservice.changeButton()">
+          <mat-icon class="text-primary  angularIconsinner">pause</mat-icon>
+        </button>
+
+        <button class="bg-dark border-0   fix-size" [disabled]="playerService.isLastPlaying()"
+                (click)="playerService.next()">
+          <mat-icon class="text-primary angularIconsmiddle">skip_next</mat-icon>
+        </button>
+
+        <button class="bg-dark border-0   fix-size">
+          <mat-icon class="text-primary angularIconsouter">loop</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
-
-
-<div class="d-flex justify-content-center fixed-bottom my-5">
-  <button class="bg-dark border-0 h4 mx-1 fix-size">
-    <i class="text-primary h4 fa-solid fa-heart  "></i>
-  </button>
-
-  <button class="bg-dark border-0 h4 mx-3 fix-size" [disabled]="playerService.isFirstPlaying()"
-          (click)="playerService.previous()">
-    <mat-icon class="text-primary" mat-list-icon>skip_previous</mat-icon>
-  </button>
-  <button class="bg-dark border-0 h4 mx-3 fix-size" (click)="playerService.play()"
-          [disabled]="playerService.state?.error"
-          *ngIf="!isPlaying()">
-    <mat-icon class="text-primary" mat-list-icon>play_circle_filled</mat-icon>
-  </button>
-  <button class="bg-dark border-0 h4 mx-3 fix-size" (click)="playerService.pause()"
-          *ngIf="isPlaying()">
-    <mat-icon class="text-primary" mat-list-icon>pause</mat-icon>
-  </button>
-  <button class="bg-dark border-0 h4 mx-3 fix-size" [disabled]="playerService.isLastPlaying()"
-          (click)="playerService.next()">
-    <mat-icon class="text-primary" mat-list-icon>skip_next</mat-icon>
-  </button>
-  <button id="shuffleButton" class="bg-dark border-0 h4 mx-3 fix-size"
-          (click)="playerService.shuffle(cloudService.songlist)">
-    <i class="text-primary fa-solid fa-shuffle"></i>
-  </button>
-
-
 </div>

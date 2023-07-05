@@ -9,16 +9,19 @@ import {CloudService} from "../../_services/cloud.service";
   styleUrls: ['./over-fiew-song.component.scss']
 })
 export class OverFiewSongComponent implements OnInit {
-
-  constructor(public cloudService : CloudService, public sonservice: SongService, public playerService: PlayerService) { }
-
+  mainColor: string = "";
+  constructor(public cloudService : CloudService, public songservice: SongService, public playerService: PlayerService) { }
   ngOnInit(): void {
+
   }
 
+
   close() {
-      this.sonservice.toggleDetailView()
+      this.songservice.toggleDetailView()
   }
   isPlaying():boolean{
     return this.playerService.isplaying
   }
+
+  protected readonly PlayerService = PlayerService;
 }
