@@ -81,7 +81,7 @@ public class YoutubeResource {
 
     @Path("/download/mp3/")
     public Response downloadSongByYTID(YoutubeDownloadDTO data) throws IOException {
-        this.postURL = "http://localhost:8080/api/stream/download/";
+        this.postURL = "http://83.215.72.88:8080/api/stream/download/";
         StringBuilder sbf1 = new StringBuilder();
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet("https://api.vevioz.com/api/button/mp3/" + data.id);
